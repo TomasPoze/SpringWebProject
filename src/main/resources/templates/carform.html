@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car creation</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="brand-title">Brand Name</div>
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+        <ul>
+            <li><a href="index.html" th:href="@{/}">Home</a></li>
+            <li><a href="/carlist" th:href="@{/carlist}">Post List</a></li>
+            <li><a href="/car/creation" th:href="@{/car/creation}">Create Post</a></li>
+        </ul>
+    </div>
+</nav>
+<h1>Produkto forma:</h1>
+
+<form th:action="@{/car/creation}" method="post" th:object="${car}">
+    <input type="hidden" th:field="*{id}"/>
+    <p th:if="*{id != null}" th:text="'Id: ' + *{id}">Id:</p>
+    <p>Brand: <input type="text" th:field="*{brand}"/></p>
+    <p>Model: <input type="text" th:field="*{model}"/></p>
+    <p>Year: <input type="text" th:field="*{year}"/></p>
+    <p>kW: <input type="text" th:field="*{KW}"/></p>
+    <p><input type="submit" th:value="${car.id != null ? 'Redaguoti' : 'Kurti'}"/></p>
+</form>
+</body>
+</html>

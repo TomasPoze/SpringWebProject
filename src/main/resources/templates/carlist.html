@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars - list</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="brand-title">Brand Name</div>
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+        <ul>
+            <li><a href="index.html" th:href="@{/}">Home</a></li>
+            <li><a href="carlist.html" th:href="@{/carlist}">Post List</a></li>
+            <li><a href="carform.html" th:href="@{/car/creation}">Create Post</a></li>
+        </ul>
+    </div>
+</nav>
+    <table class="text-center">
+        <thead>
+            <tr>
+                <td>Brand</td>
+                <td>Model</td>
+                <td>Year</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="car : ${cars}">
+                <td th:text="${car.brand}">BMW</td>
+                <td th:text="${car.model}">E46</td>
+                <td th:text="${car.year}">2001</td>
+                <td>
+                    <a th:href="@{/car/{id}(id=${car.id})}">
+                        About
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button>
+        <a th:href="@{/car/creation}">
+            Add to list
+        </a>
+    </button>
+
+</body>
+</html>
