@@ -1,0 +1,1 @@
+INSERT INTO Cars(brand, model, year, kw) VALUES('Bmw', 'E46', 2003,85);

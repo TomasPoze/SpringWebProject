@@ -5,17 +5,19 @@ import lt.codeacademy.springwebproject.services.CarsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class PostController {
+public class CarController {
 
     private CarsService carsService;
 
-    public PostController(CarsService carsService) {
+    public CarController(CarsService carsService) {
         this.carsService = carsService;
     }
 
@@ -48,13 +50,17 @@ public class PostController {
 
     @GetMapping("/car/{id}/delete")
     public String deleteCar(@PathVariable Long id, Model model){
-        List<Car> cars = carsService.deleteCar(id);
+        carsService.deleteCar(id);
+        List<Car> cars = carsService.getAllCars();
         model.addAttribute("cars", cars);
         return "carlist";
     }
 
     @PostMapping("/car/{id}")
-    public String submitCar(@ModelAttribute Car car, Model model){
+    public String submitCar(@Valid Car car, BindingResult errors, Model model){
+        if (errors.hasErrors()){
+            return "carform";
+        }
         Car newCar = carsService.createOrUpdateCar(car);
         model.addAttribute("car",newCar);
         return "carinfo";
