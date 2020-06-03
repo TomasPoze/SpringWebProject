@@ -13,10 +13,10 @@
     <table class="text-center">
         <thead>
             <tr>
-                <td>Brand</td>
-                <td>Model</td>
-                <td>Year</td>
-                <td>Action</td>
+                <td th:text="#{marke}">Brand</td>
+                <td th:text="#{modelis}">Model</td>
+                <td th:text="#{metai}">Year</td>
+                <td th:text="#{veiksmas}">Action</td>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                 <td th:text="${car.model}">E46</td>
                 <td th:text="${car.year}">2001</td>
                 <td>
-                    <a th:href="@{/public/car/{id}(id=${car.id})}">
+                    <a th:href="@{/public/car/{id}(id=${car.id})}" th:text="#{apie}">
                         About
                     </a>
                 </td>
