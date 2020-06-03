@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<link th:fragment="boot" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style th:fragment="styles">
+    table, th ,td{
+        border: 1px solid black;
+        padding: 1rem;
+    }
+
+    table{
+        border-collapse: collapse;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    li form button {
+        margin-top: 14px;
+    }
+
+    img{
+        background-size: cover;
+    }
+
+    .ml-1{
+        margin-left: 1rem;
+    }
+
+    .mr-1:last-child{
+        margin-right: 1rem;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 1rem 0;
+        grid-template-areas: ". . . ." ". . . .";
+    }
+
+    .flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: space-around;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    /* Add some padding inside the card container */
+    .container {
+        padding: 2px 16px;
+    }
+
+    .p-16{
+        padding: 0 16px;
+    }
+    p{
+        margin-top: 16px;
+    }
+
+
+    .navbar {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        color: white;
+        padding: 0;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+        margin: .5rem;
+    }
+
+    .navbar-links {
+        height: 100%;
+    }
+
+    .navbar-links ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar-links li {
+        list-style: none;
+    }
+
+    .navbar-links li a {
+        display: block;
+        text-decoration: none;
+        color: white;
+        padding: 1rem;
+    }
+
+    .navbar-links li:hover {
+        background-color: #555;
+    }
+
+    .toggle-button {
+        position: absolute;
+        top: .75rem;
+        right: 1rem;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .toggle-button .bar {
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 800px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .toggle-button {
+            display: flex;
+        }
+
+        .navbar-links {
+            display: none;
+            width: 100%;
+        }
+
+        .navbar-links ul {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .navbar-links ul li {
+            text-align: center;
+        }
+
+        .navbar-links ul li a {
+            padding: .5rem 1rem;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+    }
+</style>
+<meta charset="UTF-8">
+
+
+<nav class="navbar" th:fragment="nav" th:with="user = ${#authentication.principal}">
+    <div class="brand-title">Car - Blog</div>
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+    <div class="navbar-links">
+        <ul>
+            <li><a th:href="@{?lang=en}">EN</a></li>
+            <li><a th:href="@{?lang=lt}">LT</a></li>
+            <li><a href="/public/home" th:href="@{/public/home}" th:text="#{namai}">Home</a></li>
+            <li><a href="/public/carlist" th:href="@{/public/carlist}" th:text="#{sarasas}">Post List</a></li>
+            <li><a href="/private/car/creation" th:href="@{/private/car/creation}" th:text="#{sukurimas}">Create Post</a></li>
+            <li>
+<!--                <p th:text="${user != null ? 'Sveiki ' + user.username : 'Offline' }"></p>-->
+                <p class="pt-16" sec:authorize="isAnonymous()" th:text="#{statusas}"></p>
+                <p class="pt-16 p-16" sec:authorize="isAuthenticated()" th:text="|#{prisijunges}, ${user.username}|">Hello</p>
+            </li>
+            <li>
+                <form class="p-16" sec:authorize="isAuthenticated()" th:action="@{/atsijungimas}" method="post">
+                    <button type="submit" th:text="#{atsijungti}"></button>
+                </form>
+            </li>
+<!--            <li><a th:if="${user == null}" th:href="@{/prisijungimas}" th:text="#{prisijungti}">Prisijungimas</a></li>-->
+            <li>
+                <a sec:authorize="isAnonymous()" th:href="@{/prisijungimas}" th:text="#{prisijungti}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<footer th:fragment="bootjs">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</footer>
+</html>

@@ -1,26 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Cars - list</title>
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link th:replace="fragments/main.html :: boot">
+    <style th:replace="/fragments/main.html :: styles"></style>
+    <link rel="stylesheet" href="/../static/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
-<nav class="navbar">
-    <div class="brand-title">Brand Name</div>
-    <a href="#" class="toggle-button">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </a>
-    <div class="navbar-links">
-        <ul>
-            <li><a href="index.html" th:href="@{/}">Home</a></li>
-            <li><a href="carlist.html" th:href="@{/carlist}">Post List</a></li>
-            <li><a href="carform.html" th:href="@{/car/creation}">Create Post</a></li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="fragments/main.html :: nav(user = ${user})"></nav>
     <table class="text-center">
         <thead>
             <tr>
@@ -36,18 +25,19 @@
                 <td th:text="${car.model}">E46</td>
                 <td th:text="${car.year}">2001</td>
                 <td>
-                    <a th:href="@{/car/{id}(id=${car.id})}">
+                    <a th:href="@{/public/car/{id}(id=${car.id})}">
                         About
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
-    <button>
-        <a th:href="@{/car/creation}">
+
+        <a th:href="@{/private/car/creation}"
+        sec:authorize="hasRole('ADMIN')">
             Add to list
         </a>
-    </button>
 
+<footer th:replace="fragments/main.html :: bootjs"></footer>
 </body>
 </html>

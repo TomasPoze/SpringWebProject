@@ -3,7 +3,6 @@ package lt.codeacademy.springwebproject.services;
 import lt.codeacademy.springwebproject.controller.CarNotFoundException;
 import lt.codeacademy.springwebproject.models.Car;
 import lt.codeacademy.springwebproject.repositories.CarRepository;
-import lt.codeacademy.springwebproject.repositories.InternalCarsDao;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Car - info</title>
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link th:replace="fragments/main.html :: boot">
+    <link th:replace="fragments/main.html :: styles">
 </head>
 <body>
-<nav class="navbar">
-    <div class="brand-title">Brand Name</div>
-    <a href="#" class="toggle-button">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </a>
-    <div class="navbar-links">
-        <ul>
-            <li><a href="index.html" th:href="@{/}">Home</a></li>
-            <li><a href="carlist.html" th:href="@{/carlist}">Post List</a></li>
-            <li><a href="carform.html" th:href="@{/car/creation}">Create Post</a></li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="fragments/main.html :: nav(user = ${user})"></nav>
     <h1>Review</h1>
+    <img th:src="${car.img}" height="200px">
     <h3 th:text="${car.brand} + ' ' + ${car.model}">Brand + Model</h3>
-    <h4 th:text="'Year: ' + ${car.year}">Year</h4>
-    <h4 th:text="'kw: ' + ${car.KW}">kW</h4>
+    <h3 th:text="'Year: ' + ${car.year}">Year</h3>
+    <h3 th:text="'kw: ' + ${car.KW}">kW</h3>
+    <h3 th:text="'About the car: ' + ${car.review}">test</h3>
 
-    <h2>Test Drive</h2>
-    <p>Test drive experience</p>
 
-    <p> <a th:href="@{/car/update/{id}(id=${car.id})}">Redaguoti</a> </p>
-    <p> <a th:href="@{/car/{id}/delete(id=${car.id})}">Ištrinti</a> </p>
+    <p> <a sec:authorize="hasRole('ADMIN')" th:href="@{/private/car/update/{id}(id=${car.id})}">Redaguoti</a> </p>
+    <p> <a sec:authorize="hasRole('ADMIN')" th:href="@{/private/car/{id}/delete(id=${car.id})}">Ištrinti</a> </p>
+
+<footer th:replace="fragments/main.html :: bootjs"></footer>
 </body>
 </html>

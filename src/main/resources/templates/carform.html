@@ -4,39 +4,39 @@
     <meta charset="UTF-8">
     <title>Car creation</title>
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link th:replace="fragments/main.html :: boot">
+    <link th:replace="fragments/main.html :: styles">
 </head>
 <body>
-<nav class="navbar">
-    <div class="brand-title">Brand Name</div>
-    <a href="#" class="toggle-button">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </a>
-    <div class="navbar-links">
-        <ul>
-            <li><a href="index.html" th:href="@{/}">Home</a></li>
-            <li><a href="/carlist" th:href="@{/carlist}">Post List</a></li>
-            <li><a href="/car/creation" th:href="@{/car/creation}">Create Post</a></li>
-        </ul>
-    </div>
-</nav>
-<h1>Produkto forma:</h1>
+<nav th:replace="fragments/main.html :: nav(user = ${user})"></nav>
+<h1 class="ml-2">Car post:</h1>
 
 <ul th:if="${#fields.hasErrors('${car.*}')}">
-    <li th:each="error : ${#fields.errors('${car.*}')}" th:text="${error}"/>
+    <li th:each="error : ${#fields.errors('${car.*}')}" th:text="${error}"></li>
 </ul>
 
-<form th:action="@{/car/creation}" method="post" th:object="${car}">
+<form th:action="@{/private/car/creation}" method="post" th:object="${car}" class="ml-2 text-left">
     <input type="hidden" th:field="*{id}"/>
     <p th:if="*{id != null}" th:text="'Id: ' + *{id}">Id:</p>
     <p>Brand: <input type="text" th:field="*{brand}" th:errorclass="error"/>
         <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="error"></span>
     </p>
-    <p>Model: <input type="text" th:field="*{model}"/></p>
-    <p>Year: <input type="text" th:field="*{year}"/></p>
-    <p>kW: <input type="text" th:field="*{KW}"/></p>
+    <p>Model: <input type="text" th:field="*{model}"/>
+        <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="error"></span>
+    </p>
+    <p>Year: <input type="number" maxlength="4" th:field="*{year}"/>
+        <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error"></span>
+    </p>
+    <p>kW: <input type="number" maxlength="4" th:field="*{KW}"/>
+        <span th:if="${#fields.hasErrors('KW')}" th:errors="*{KW}" class="error"></span>
+    </p>
+    <p>Review: <textarea cols="50" rows="10" th:field="*{review}"></textarea>
+    <span th:if="${#fields.hasErrors('review')}" th:errors="*{review}" class="error"></span>
+    </p>
+    <p>IMG url: <input type="text" th:field="*{img}">
+    </p>
     <p><input type="submit" th:value="${car.id != null ? 'Redaguoti' : 'Kurti'}"/></p>
 </form>
+<footer th:replace="fragments/main.html :: bootjs"></footer>
 </body>
 </html>

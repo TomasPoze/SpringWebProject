@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link th:replace="fragments/main.html :: boot">
+    <link th:replace="fragments/main.html :: styles">
+</head>
+<body>
+<nav th:replace="fragments/main.html :: nav(user = ${user})"></nav>
+<h1 class="text-center" th:text="#{perziura}">Car review blog</h1>
+
+<div class="flex">
+    <div th:each="car : ${cars} " class="card" style="width: 18rem;">
+        <img class="card-img-top" th:src="${car.img}" alt="Car" style="width: 100%">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${car.brand} +' '+ ${car.model}">Card title</h5>
+            <p th:text="${car.year}" class="card-text">year</p>
+            <a th:href="@{/public/car/{id}(id=${car.id})}" class="btn btn-primary" th:text="#{apie}">Review</a>
+
+        </div>
+    </div>
+</div>
+
+
+
+<footer th:replace="fragments/main.html :: bootjs"></footer>
+
+</body>
+</html>
